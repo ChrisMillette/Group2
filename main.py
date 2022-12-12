@@ -1,4 +1,11 @@
-
+class Doctor:
+    id = 0
+    name = ""
+    speciality = ""
+    timing = ""
+    qualification = ""
+    roomNumber = 0
+    
 class Patient(object):
 
     global patients
