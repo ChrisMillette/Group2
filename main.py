@@ -87,7 +87,7 @@ class Patient(object):
 
     def addPatientToFile():
         data = ''
-        file = open("files\doctors.txt", "a")
+        file = open("files\patients.txt", "a")
         data += '\n' + input("Enter the patient's ID:\n\n") + '_'
         data += input("Enter the patient's Name:\n\n") + '_'
         data += input("Enter the patient's Disease:\n\n") + '_'
