@@ -119,6 +119,7 @@ Select from the following options, or select 0 to stop:
 2 - 	Facilities
 3 - 	Laboratories
 4 - 	Patients\n\n""")
+            # This will display Doctor's class Menu.
             if mainEntry == '1':
                 while True:
                     Doctor.readDoctorsFile()
@@ -143,6 +144,7 @@ Select from the following options, or select 0 to stop:
                         Doctor.writeListOfDoctorsToFile(Doctor.formatDrInfo())
                     elif doctorEntry == '6':
                         break
+                        #This Entry will display facility Menu.
             elif mainEntry == '2':
                 while True:
                     facilityEntry = input("""\nFacilities Menu:
