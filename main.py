@@ -36,7 +36,7 @@ class Doctor(object):
         
     # this function reads the doctors' information from the given file
     def readDoctorsFile(self):
-        f = open("doctors.txt", "r")
+        f = open("files/doctors.txt", "r")
         next(f)  # skips the header of the file 
         lines = f.readlines()
         for line in lines: # reading the file line by line
@@ -53,7 +53,7 @@ class Doctor(object):
     def searchDoctorById(self):             
         found = False
         search = int(input("Enter the doctor's ID to search: "))
-        f = open("doctors.txt", "r")
+        f = open("files/doctors.txt", "r")
         header = (f.readline())
         id, name, speciality, timing, qualification, roomNumber = header.split('_')
         print("{:<4} {:<20} {:<15} {:<15} {:<15} {:<15}".format(id,name,speciality,timing,qualification,roomNumber))    # displaying the header
@@ -81,7 +81,7 @@ class Doctor(object):
     def searchDoctorByName(self):
         found = False
         search = input("Enter the doctor's name to search: ")
-        f = open("doctors.txt", "r")
+        f = open("files/doctors.txt", "r")
         header = (f.readline())
         id, name, speciality, timing, qualification, roomNumber = header.split('_')
         print("{:<4} {:<20} {:<15} {:<15} {:<15} {:<15}".format(id,name,speciality,timing,qualification,roomNumber))
@@ -143,7 +143,7 @@ class Doctor(object):
 
     # this function prints all the doctors that are present in the given file
     def displayDoctorsList(self):
-        f = open("doctors.txt", "r")
+        f = open("files/doctors.txt", "r")
         lines = f.readlines()
         for line in lines:
             id, name, speciality, timing, qualification, roomNumber = line.split('_')
@@ -161,7 +161,7 @@ class Doctor(object):
     # add a single doctor's information to the txt file
     def addDrToFile(self):
         new = self.enterDrInfo()
-        f = open("doctors.txt", "a")
+        f = open("files/doctors.txt", "a")
         f.write("\n"+new.formatDrInfo())
         f.close()
         print("Back to the prevoius menu\n")
@@ -190,105 +190,7 @@ class Facility(object):
         wl.write(facu)
         wl.close
 
-class Patient(object):
-
-    global patients
-    patients = {}
-#Constructor
-    def __init__(self):
-        self.Patient = Patient()
-#Formats current patient list to that of the patient file
-    def formatPatientInfo():
-        data = ''
-        count = 0
-        for i in patients:
-            for x in patients[i]:
-                if count == 0 or count % 5 == 0:
-                    data = data + '\n' + x
-                    count += 1
-                else:
-                    data = data + '_' + x
-                    count += 1
-        return data
-#Asks the user to enter new patient info and adds it to the patient list    
-    def enterPatientInfo():
-        data = []
-        data.append(input("Enter the patient's ID:\n\n\t"))
-        data.append(input("Enter the patient's name:\n\n\t"))
-        data.append(input("Enter the patient's specialty:\n\n\t"))
-        data.append(input("Enter the patient's timing (e.g., 7am-10pm):\n\n\t"))
-        data.append(input("Enter the patient's qualification:\n\n\t"))
-        data.append(input("Enter the patient's room number:\n\n\t"))
-        patients[data[0]] = data
-        print("\nBack to the previous menu\n")
-#Reads the patient file and populates the patient dictionary
-    def readPatientFile():
-        data = {}
-        count = 0
-        file = open("files\patients.txt", "r")
-        for i in file.readlines():
-            i = i.replace(' ', '')
-            i = i.replace('\n','')
-            data[count] = i.split('_', 4)
-            count += 1
-        for i in data:
-            if i == 0:
-                patients['0'] = data[i]
-            else:
-                patients[data[i][0]] = data[i]
-        file.close()
-#Searches for patient by ID
-    def searchPatientById(entry):
-        for i in patients:
-            if i == entry:
-                result = True
-                break
-            else:
-                result = False
-        if result == True:
-            return True
-        else:
-            return False
-#Displays specific patient info in terminal
-    def displayPatientInfo(id):
-        print("\n{:<8} {:<15} {:<15} {:<10} {:<20}\n".format('ID', 'Name', 'Disease', 'Gender', 'Age'))
-        print("{:<8} {:<15} {:<15} {:<10} {:<20}".format(id, patients[id][1], patients[id][2], patients[id][3], patients[id][4]))
-        print("\nBack to the previous menu\n")
-#Edits current patient info after user prompts
-    def editPatientInfo():
-        id = input("Please enter the ID of the patient that you want to edit their information:\n\n")
-        patients[id][1] = input("Enter new Name:\n\n")
-        patients[id][2] = input("Enter new Disease:\n\n")
-        patients[id][3] = input("Enter new Gender:\n\n")
-        patients[id][4] = input("Enter new Age:\n\n")
-        print("\nBack to the previous menu\n")
-#Displays table of all of the patients present in dictionary
-    def displayPatientsList():
-        print("\n{:<8} {:<15} {:<15} {:<10} {:<20}\n".format('ID', 'Name', 'Disease', 'Gender', 'Age'))
-        for i in patients:
-            if i != '0':
-                print("{:<8} {:<15} {:<15} {:<10} {:<20}".format(i, patients[i][1], patients[i][2], patients[i][3], patients[i][4]))
-        print("\nBack to the previous menu\n")
-#Writes the formatted patient list to the patients file
-    def writeListOfPatientsToFile(data):
-        file = open("files\patients.txt", "w")
-        for i in data:
-            file.write(i)
-        file.close()
-#Add's a single patient to the file
-    def addPatientToFile():
-        data = ''
-        file = open("files\patients.txt", "a")
-        data += '\n' + input("Enter the patient's ID:\n\n") + '_'
-        data += input("Enter the patient's Name:\n\n") + '_'
-        data += input("Enter the patient's Disease:\n\n") + '_'
-        data += input("Enter the patient's Gender:n\n") + '_'
-        data += input("Enter the patient's Age:\n\n") + '_'
-        file.write(data)
-        file.close()
-        print("\nBack to the previous menu\n")
-        
-class Laboratory:
+class Laboratory(object):
     name = ""
     cost = 0
     # list to maintain all laboratories
@@ -299,8 +201,8 @@ class Laboratory:
         self.cost = cost
         self.laboratory_list.append(self)
     
-    def list_laboratories(self):
-        f = open("laboratories.txt", "r")
+    def displayLabsList(self):
+        f = open("files/laboratories.txt", "r")
         lines = f.readlines()
         for line in lines:
             name, cost = line.split('_')
@@ -308,7 +210,7 @@ class Laboratory:
         f.close()
         print("\nBack to the prevoius menu\n")
     
-    def add_laboratory(self):  
+    def addLabToFile(self):  
         name = input("Enter the name of the laboratory: ")
         cost = int(input("Enter the cost of the laboratory: "))
         self.laboratory_list.append(Laboratory(name, cost))
@@ -321,8 +223,8 @@ class Laboratory:
             f.close()
         print("\nBack to the prevoius menu\n")    
     
-    def writeListOfLaboratories(self):
-        f = open("laboratories.txt", "w")
+    def writeListOfLabsToFile(self):
+        f = open("files/laboratories.txt", "w")
         f.write("Laboratories List:")
         for lab in self.laboratory_list:
             if lab.name == self.name:
@@ -334,38 +236,117 @@ class Laboratory:
     def formatLabInfo(self):
         return self.name + "_" + str(self.cost)
         
-    
     def enterLaboratoryInfo(self):
         name = input("Enter the name of the laboratory: ")
         cost = int(input("Enter the cost of the laboratory: "))
         Laboratory(name, cost)
-        print("Laboratory oject created successfully")
+        print("Laboratory Project created successfully")
     
-    def readLaboratorieFile(self):
-        f = open("laboratories.txt", "r")
+    def readLaboratoriesFile(self):
+        f = open("files/laboratories.txt", "r")
         lines = f.readlines()
         for line in lines:
             name, cost = line.split('_')
             Laboratory(name, cost)
         f.close()
         print("\nBack to the prevoius menu\n")
+
+class Patient(object):
+
+    global patients
+    patients = {}
+
+    def __init__(self):
+        self.Patient = Patient()
+        
+    def formatPatientInfo():
+        data = ''
+        count = 0
+        for i in patients:
+            for x in patients[i]:
+                if count == 0 or count % 5 == 0:
+                    data = data + '\n' + x
+                    count += 1
+                else:
+                    data = data + '_' + x
+                    count += 1
+        return data
     
-    def lab_menu(self):
-        while 1:
-            print("Laboratory Menu")
-            print("1 - Display laboratories list")
-            print("2 - Add laboratory")
-            print("3 - Go back to main menu")
-            choice = int(input("Enter your choice: "))
-            if choice == 1:
-                self.list_laboratories()
-            elif choice == 2:
-                self.add_laboratory()
-            elif choice == 3:
-                exit()
+    def enterPatientInfo():
+        data = []
+        data.append(input("Enter the patient's ID:\n\n\t"))
+        data.append(input("Enter the patient's name:\n\n\t"))
+        data.append(input("Enter the patient's specialty:\n\n\t"))
+        data.append(input("Enter the patient's timing (e.g., 7am-10pm):\n\n\t"))
+        data.append(input("Enter the patient's qualification:\n\n\t"))
+        data.append(input("Enter the patient's room number:\n\n\t"))
+        patients[data[0]] = data
+        print("\nBack to the previous menu\n")
+
+    def readPatientFile():
+        data = {}
+        count = 0
+        file = open("files\patients.txt", "r")
+        lines = file.readlines()
+        for i in lines:
+            print(i)
+            data[count] = i.split('_', 5)
+            count += 1
+        for i in data:
+            if i == 0:
+                patients['0'] = data[i]
             else:
-                print("Invalid choice")
-                self.lab_menu()
+                patients[data[i][0]] = data[i]
+        file.close()
+
+    def searchPatientById(entry):
+        for i in patients:
+            if i == entry:
+                result = True
+                break
+            else:
+                result = False
+        if result == True:
+            return True
+        else:
+            return False
+
+    def displayPatientInfo(id):
+        print("\n{:<8} {:<15} {:<15} {:<10} {:<20}\n".format('ID', 'Name', 'Disease', 'Gender', 'Age'))
+        print("{:<8} {:<15} {:<15} {:<10} {:<20}".format(id, patients[id][1], patients[id][2], patients[id][3], patients[id][4]))
+
+    def editPatientInfo():
+        id = input("Please enter the ID of the patient that you want to edit their information:\n\n")
+        patients[id][1] = input("Enter new Name:\n\n")
+        patients[id][2] = input("Enter new Disease:\n\n")
+        patients[id][3] = input("Enter new Gender:\n\n")
+        patients[id][4] = input("Enter new Age:\n\n")
+        print("\nBack to the previous menu\n")
+
+    def displayPatientsList():
+        print("\n{:<8} {:<15} {:<15} {:<10} {:<20}\n".format('ID', 'Name', 'Disease', 'Gender', 'Age'))
+        for i in patients:
+            if i != '0':
+                print("{:<8} {:<15} {:<15} {:<10} {:<20}".format(i, patients[i][1], patients[i][2], patients[i][3], patients[i][4]))
+        print("\nBack to the previous menu\n")
+
+    def writeListOfPatientsToFile(data):
+        file = open("files\patients.txt", "w")
+        for i in data:
+            file.write(i)
+        file.close()
+
+    def addPatientToFile():
+        data = ''
+        file = open("files\patients.txt", "a")
+        data += '\n' + input("Enter the patient's ID:\n\n") + '_'
+        data += input("Enter the patient's Name:\n\n") + '_'
+        data += input("Enter the patient's Disease:\n\n") + '_'
+        data += input("Enter the patient's Gender:n\n") + '_'
+        data += input("Enter the patient's Age:\n\n") + '_'
+        file.write(data)
+        file.close()
+        print("\nBack to the previous menu\n")
 
 class Management:
 # DisplayMenu to display the menu shown in the Sample Run section.     
@@ -379,9 +360,9 @@ Select from the following options, or select 0 to stop:
 4 - 	Patients\n\n""")
 # This Entry[1] will run through the Doctor's Menu.
             if mainEntry == '1':
-                doctor = Doctor()
+                doctor = Doctor('','','','','','')
                 while True:
-                    Doctor.readDoctorsFile()
+                    Doctor.readDoctorsFile(doctor)
                     doctorEntry = input("""\nDoctors Menu:
 1 - Display Doctors list
 2 - Search for doctor by ID
@@ -420,15 +401,19 @@ Select from the following options, or select 0 to stop:
 # This Entry[3] will run through the Laboratory Menu.  
 
             elif mainEntry == '3':
+                lab = Laboratory('','')
                 while True:
                     laboratoryEntry = input("""Laboratories Menu:
 1 - Display laboratories list
 2 - Add laboratory
 3 - Back to the Main Menu\n\n""")
                     if laboratoryEntry == '1':
-                        pass
+                        Laboratory.displayLabsList(lab)
                     elif laboratoryEntry == '2':
-                        pass
+                        Laboratory.addLabToFile(lab)
+                        Laboratory.writeListOfLabsToFile(lab)
+                    elif laboratoryEntry == '3':
+                        break
 # This Entry[4] will run through the Patient Menu.
 
             elif mainEntry == '4':
@@ -445,8 +430,10 @@ Select from the following options, or select 0 to stop:
                         print("\nBack to the previous menu\n")
                     elif patientsEntry == '2':
                         entry = input("\n Enter the Patient ID:\n\n")
-                        Patient.searchPatientById(entry)
-                        Patient.displayPatientInfo(entry)
+                        if Patient.searchPatientById(entry) == True:
+                            Patient.displayPatientInfo(entry)
+                        else:
+                            print("\nCan't find the Patient with the same id on the system\n")
                         print("\nBack to the previous menu\n")
                     elif patientsEntry == '3':
                         Patient.addPatientToFile()
@@ -454,7 +441,7 @@ Select from the following options, or select 0 to stop:
                         print("\nBack to the previous menu\n")
                     elif patientsEntry == '4':
                         Patient.editPatientInfo()
-                        Patient.writeListOfPatientsToFile()
+                        Patient.writeListOfPatientsToFile(Patient.formatPatientInfo())
                         print("\nBack to the previous menu\n")
                     elif patientsEntry == '5':
                         print("\nBack to the previous menu\n")
