@@ -186,7 +186,7 @@ class Facility(object):
         print (facu)
 
     def writeListOffacilitiestoFile():
-        wl = open ("files\facilities.txt", "w")
+        wl = open ("files/facilities.txt", "w")
         wl.write(facu)
         wl.close
 
@@ -334,6 +334,7 @@ Select from the following options, or select 0 to stop:
                         Facility.displayFacilities()
                     elif facilityEntry == '2':
                         Facility.addFacility()
+                        Facility.writeListOffacilitiestoFile()
                     elif facilityEntry == '3':
                         break
 # This Entry[3] will run through the Laboratory Menu.  
