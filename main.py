@@ -1,3 +1,4 @@
+# doctor class to hold information of particular doctor
 class Doctor:
     id = 0
     name = ""
@@ -15,12 +16,15 @@ class Doctor:
         self.timing = timing
         self.qualification = qualification
         self.roomNumber = roomNumber
-        self.doctor_list.append(self)
-    
+        self.doctor_list.append(self)       # whenever a constructor is called the doctor is appending the list of doctors
+
+    # function to convert the doctor's information according to the format of doctor.txt file    
     def formatDrInfo(self):
         formatted_data =  str(self.id) + '_' + self.name + '_' + self.speciality + '_' + self.timing + '_' + self.qualification + '_' + str(self.roomNumber)
         return formatted_data
 
+
+    # this function takes information abput a doctor and returns its object 
     def enterDrInfo(self):
         id = int(input("Enter the doctor's ID: "))
         name = input("Enter the doctor's name: ")
@@ -30,38 +34,40 @@ class Doctor:
         roomNumber = int(input("Enter the doctor's room number: "))
         return Doctor(id, name, speciality, timing, qualification, roomNumber)
         
-
+    # this function reads the doctors' information from the given file
     def readDoctorsFile(self):
         f = open("doctors.txt", "r")
-        next(f)
+        next(f)  # skips the header of the file 
         lines = f.readlines()
-        for line in lines:
-            id, name, speciality, timing, qualification, roomNumber = line.split('_')
-            Doctor(int(id), name, speciality, timing, qualification, int(roomNumber))
-        f.close()
+        for line in lines: # reading the file line by line
+            id, name, speciality, timing, qualification, roomNumber = line.split('_')   # splitting the contents of the line and saving to variables
+            Doctor(int(id), name, speciality, timing, qualification, int(roomNumber))   # creating the doctor's object using the extracted info
+        f.close()                                               
         for doc in self.doctor_list:
             if doc.id == self.id:
                 print(doc.id, self.id)
-                print("Doctor with the same ID already exists\n")
-                self.doctor_list.remove(doc)
+                # print("Doctor with the same ID already exists\n")
+                self.doctor_list.remove(doc)                                            # removing the doctor with the same id 
 
-
-    def search_doctor_id(self):
+    # function to search for a doctor using his/her id 
+    def search_doctor_id(self):             
         found = False
         search = int(input("Enter the doctor's ID to search: "))
         f = open("doctors.txt", "r")
         header = (f.readline())
         id, name, speciality, timing, qualification, roomNumber = header.split('_')
-        print("{:<4} {:<20} {:<15} {:<15} {:<15} {:<15}".format(id,name,speciality,timing,qualification,roomNumber))
-
-        lines = f.readlines()
+        print("{:<4} {:<20} {:<15} {:<15} {:<15} {:<15}".format(id,name,speciality,timing,qualification,roomNumber))    # displaying the header
+        
+        # searching for doctor in file
+        lines = f.readlines()                                                                                            
         for line in lines:
             did, name, speciality, timing, qualification, roomNumber = line.split('_')
             if did == str(search):
-                print("{:<4} {:<20} {:<15} {:<15} {:<15} {:<15}".format(did,name,speciality,timing,qualification,roomNumber))
+                print("{:<4} {:<20} {:<15} {:<15} {:<15} {:<15}".format(did,name,speciality,timing,qualification,roomNumber))   # displaying the doctor's info in a tabular format
                 f.close()
                 found = True
 
+        # searching for doctor in the list of doctors
         for doc in self.doctor_list:
             if doc.id == id:
                 print("{:<4} {:<20} {:<15} {:<15} {:<15} {:<15}".format(doc.id,doc.name,doc.speciality,doc.timing,doc.qualification,doc.roomNumber))
@@ -71,7 +77,7 @@ class Doctor:
         else:
             print("Back to the prevoius menu\n")
         
-
+    # search doctor by name
     def search_doctor_name(self):
         found = False
         search = input("Enter the doctor's name to search: ")
@@ -80,6 +86,7 @@ class Doctor:
         id, name, speciality, timing, qualification, roomNumber = header.split('_')
         print("{:<4} {:<20} {:<15} {:<15} {:<15} {:<15}".format(id,name,speciality,timing,qualification,roomNumber))
         
+        # searching in file
         lines = f.readlines()
         for line in lines:
             id, dname, speciality, timing, qualification, roomNumber = line.split('_')
@@ -88,6 +95,8 @@ class Doctor:
                 f.close()
                 found = True
         
+
+        # searching in doctor's list
         for doc in self.doctor_list:
             if doc.name == name:
                 print("{:<4} {:<20} {:<15} {:<15} {:<15} {:<15}".format(doc.id,doc.name,doc.speciality,doc.timing,doc.qualification,doc.roomNumber))
@@ -97,7 +106,7 @@ class Doctor:
         else:
             print("Back to the prevoius menu\n")
 
-
+    # display the information of the doctor using its object 
     def displayDoctorInfo(self):
         print(self.id)
         print(self.name)
@@ -106,13 +115,14 @@ class Doctor:
         print(self.qualification)
         print(self.roomNumber)
     
+    # function to edit the information about a doctor using his/her id
     def edit_doctor(self):
         flag = False
-        self.readDoctorsFile()
+        self.readDoctorsFile()  # readint the doctors.txt file and saving all doctors in the list 
         search = int(input("Please enter the id of the doctor that you want to edit their information:  "))
         for doc in self.doctor_list:
-            if doc.id == search:
-                flag = True
+            if doc.id == search:        # if the doctor's id is found the program asks for further information to be changed
+                flag = True             # set the flag to true 
                 print("Enter new Name:")
                 name = input("Enter the new name of the doctor: ")
                 speciality = input("Enter new Specilist in: ")
@@ -124,13 +134,14 @@ class Doctor:
                 doc.timing = timing
                 doc.qualification = qualification
                 doc.roomNumber = roomNumber
-                self.writeListofDoctorsToFile()
+                self.writeListofDoctorsToFile()         # write the changes to the file 
                 break
         if flag==False:
             print("Cant find the doctor with the same ID on the system\n")
         else:
             print("Back to the prevoius Menu\n")
 
+    # this function prints all the doctors that are present in the given file
     def list_doctors(self):
         f = open("doctors.txt", "r")
         lines = f.readlines()
@@ -140,14 +151,15 @@ class Doctor:
         f.close()
         print("Back to the prevoius menu\n")
 
+    # this function reads the doctor's list from the program's memory and copy all doctors to file in the same format
     def writeListofDoctorsToFile(self):
-        # remove duplicates from list
         f = open("doctors.txt", "w")
-        f.write("id_name_speciality_timing_qualification_roomNumber")
+        f.write("id_name_speciality_timing_qualification_roomNumber") # manually writing the header to the txt file
         for doc in self.doctor_list:    
             f.write("\n"+doc.formatDrInfo())
         f.close()
     
+    # add a single doctor's information to the txt file
     def addDrToFile(self):
         new = self.enterDrInfo()
         f = open("doctors.txt", "a")
@@ -177,8 +189,7 @@ class Doctor:
             elif choice == 5:
                 self.edit_doctor()
             elif choice == 6:
-                exit()
-               
+                management.Management.DisplayMenu()
             else:
                 print("Invalid choice")
                 self.doctor_menu()
@@ -206,7 +217,7 @@ class facilities:
         wl = open ("files\facilities.txt", "w")
         wl.write(facu)
         wl.close
-        
+
 class Patient(object):
 
     global patients
