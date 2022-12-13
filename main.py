@@ -1,5 +1,5 @@
 # doctor class to hold information of particular doctor
-class Doctor:
+class Doctor(object):
     id = 0
     name = ""
     speciality = ""
@@ -50,7 +50,7 @@ class Doctor:
                 self.doctor_list.remove(doc)                                            # removing the doctor with the same id 
 
     # function to search for a doctor using his/her id 
-    def search_doctor_id(self):             
+    def searchDoctorById(self):             
         found = False
         search = int(input("Enter the doctor's ID to search: "))
         f = open("doctors.txt", "r")
@@ -78,7 +78,7 @@ class Doctor:
             print("Back to the prevoius menu\n")
         
     # search doctor by name
-    def search_doctor_name(self):
+    def searchDoctorByName(self):
         found = False
         search = input("Enter the doctor's name to search: ")
         f = open("doctors.txt", "r")
@@ -116,7 +116,7 @@ class Doctor:
         print(self.roomNumber)
     
     # function to edit the information about a doctor using his/her id
-    def edit_doctor(self):
+    def editDoctorInfo(self):
         flag = False
         self.readDoctorsFile()  # readint the doctors.txt file and saving all doctors in the list 
         search = int(input("Please enter the id of the doctor that you want to edit their information:  "))
@@ -142,7 +142,7 @@ class Doctor:
             print("Back to the prevoius Menu\n")
 
     # this function prints all the doctors that are present in the given file
-    def list_doctors(self):
+    def displayDoctorsList(self):
         f = open("doctors.txt", "r")
         lines = f.readlines()
         for line in lines:
@@ -152,7 +152,7 @@ class Doctor:
         print("Back to the prevoius menu\n")
 
     # this function reads the doctor's list from the program's memory and copy all doctors to file in the same format
-    def writeListofDoctorsToFile(self):
+    def writeListOfDoctorsToFile(self):
         f = open("doctors.txt", "w")
         f.write("id_name_speciality_timing_qualification_roomNumber") # manually writing the header to the txt file
         for doc in self.doctor_list:    
@@ -166,36 +166,9 @@ class Doctor:
         f.write("\n"+new.formatDrInfo())
         f.close()
         print("Back to the prevoius menu\n")
-
-    def doctor_menu(self):
-        while 1:
-            print("\nDoctors Menu:")
-            print("1 - Display Doctors list")
-            print("2 - Search for doctor by ID")
-            print("3 - Search for doctor by name")
-            print("4 - Add doctor")
-            print("5 - Edit doctor info")
-            print("6 - Back to the Main Menu")
-        
-            choice = int(input("Enter your choice: "))
-            if choice == 1:
-                self.list_doctors()
-            elif choice == 2:
-                self.search_doctor_id()
-            elif choice == 3:
-                self.search_doctor_name()
-            elif choice == 4:
-                self.addDrToFile()
-            elif choice == 5:
-                self.edit_doctor()
-            elif choice == 6:
-                management.Management.DisplayMenu()
-            else:
-                print("Invalid choice")
-                self.doctor_menu()
                 
-class facilities:
-    tfile = open ("files\facilities.txt", "r")
+class Facility(object):
+    tfile = open ("files/facilities.txt", "r")
     global fac
     fac = tfile.read()
     tfile.close
@@ -204,16 +177,16 @@ class facilities:
     global facu
     facu = fac
 
-    def addFacility ():
+    def addFacility():
         global facu
         nfac = input ("Add a New Facility:\n")
         facu = fac+"\n"+nfac
 
 
-    def displayFacilities ():
+    def displayFacilities():
         print (facu)
 
-    def writeListOffacilitiestoFile ():
+    def writeListOffacilitiestoFile():
         wl = open ("files\facilities.txt", "w")
         wl.write(facu)
         wl.close
@@ -315,11 +288,6 @@ class Patient(object):
         file.write(data)
         file.close()
         print("\nBack to the previous menu\n")
-      
-# Import files from, Doctor, Facility and Patient
-from Doctor import Doctor
-from Facility import Facility
-from Patient import Patient
 
 class Management:
 # DisplayMenu to display the menu shown in the Sample Run section.     
@@ -345,9 +313,11 @@ Select from the following options, or select 0 to stop:
                     if doctorEntry == '1':
                         Doctor.displayDoctorsList()
                     elif doctorEntry == '2':
-                        Doctor.searchDoctorById(input("\n Enter the doctor ID:\n\n"))
+                        idEntry = input("\n Enter the doctor ID:\n\n")
+                        Doctor.searchDoctorById(idEntry)
                     elif doctorEntry == '3':
-                        Doctor.searchDoctorByName(input("\n Enter the doctor name:\n\n"))
+                        nameEntry = input("\n Enter the doctor name:\n\n")
+                        Doctor.searchDoctorByName(nameEntry)
                     elif doctorEntry == '4':
                         Doctor.addDrToFile()
                         Doctor.writeListOfDoctorsToFile(Doctor.formatDrInfo())
@@ -419,3 +389,4 @@ Select from the following options, or select 0 to stop:
             continue
         else:
             break  
+
