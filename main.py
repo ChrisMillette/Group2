@@ -157,7 +157,8 @@ Select from the following options, or select 0 to stop:
                         Facility.addFacility()
                     elif facilityEntry == '3':
                         break
-# This Entry[3] will run through the Laboratory Menu.                        
+# This Entry[3] will run through the Laboratory Menu.  
+
             elif mainEntry == '3':
                 while True:
                     laboratoryEntry = input("""Laboratories Menu:
@@ -168,6 +169,8 @@ Select from the following options, or select 0 to stop:
                         pass
                     elif laboratoryEntry == '2':
                         pass
+# This Entry[4] will run through the Patient Menu.
+
             elif mainEntry == '4':
                 while True:
                     Patient.readPatientFile()
