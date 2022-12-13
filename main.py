@@ -152,12 +152,11 @@ class Doctor(object):
         print("Back to the prevoius menu\n")
 
     # this function reads the doctor's list from the program's memory and copy all doctors to file in the same format
-    def writeListOfDoctorsToFile(self):
-        f = open("doctors.txt", "w")
-        f.write("id_name_speciality_timing_qualification_roomNumber") # manually writing the header to the txt file
-        for doc in self.doctor_list:    
-            f.write("\n"+doc.formatDrInfo())
-        f.close()
+    def writeListOfDoctorsToFile(data):
+        file = open("files\doctors.txt", "w")
+        for i in data:
+            file.write(i)
+        file.close()
     
     # add a single doctor's information to the txt file
     def addDrToFile(self):
@@ -254,7 +253,6 @@ class Patient(object):
     def displayPatientInfo(id):
         print("\n{:<8} {:<15} {:<15} {:<10} {:<20}\n".format('ID', 'Name', 'Disease', 'Gender', 'Age'))
         print("{:<8} {:<15} {:<15} {:<10} {:<20}".format(id, patients[id][1], patients[id][2], patients[id][3], patients[id][4]))
-        print("\nBack to the previous menu\n")
 
     def editPatientInfo():
         id = input("Please enter the ID of the patient that you want to edit their information:\n\n")
@@ -301,6 +299,7 @@ Select from the following options, or select 0 to stop:
 4 - 	Patients\n\n""")
 # This Entry[1] will run through the Doctor's Menu.
             if mainEntry == '1':
+                doctor = Doctor()
                 while True:
                     Doctor.readDoctorsFile()
                     doctorEntry = input("""\nDoctors Menu:
@@ -311,19 +310,17 @@ Select from the following options, or select 0 to stop:
 5 - Edit doctor info
 6 - Back to the Main Menu\n\n""")
                     if doctorEntry == '1':
-                        Doctor.displayDoctorsList()
+                        Doctor.displayDoctorsList(doctor)
                     elif doctorEntry == '2':
-                        idEntry = input("\n Enter the doctor ID:\n\n")
-                        Doctor.searchDoctorById(idEntry)
+                        Doctor.searchDoctorById(doctor)
                     elif doctorEntry == '3':
-                        nameEntry = input("\n Enter the doctor name:\n\n")
-                        Doctor.searchDoctorByName(nameEntry)
+                        Doctor.searchDoctorByName(doctor)
                     elif doctorEntry == '4':
-                        Doctor.addDrToFile()
-                        Doctor.writeListOfDoctorsToFile(Doctor.formatDrInfo())
+                        Doctor.addDrToFile(doctor)
+                        Doctor.writeListOfDoctorsToFile(Doctor.formatDrInfo(doctor))
                     elif doctorEntry == '5':
-                        Doctor.editDoctorInfo()
-                        Doctor.writeListOfDoctorsToFile(Doctor.formatDrInfo())
+                        Doctor.editDoctorInfo(doctor)
+                        Doctor.writeListOfDoctorsToFile(Doctor.formatDrInfo(doctor))
                     elif doctorEntry == '6':
                         break
 # This Entry[2] will run through the Facilities Menu.
@@ -373,9 +370,11 @@ Select from the following options, or select 0 to stop:
                     elif patientsEntry == '3':
                         Patient.addPatientToFile()
                         Patient.writeListOfPatientsToFile(Patient.formatPatientInfo())
+                        print("\nBack to the previous menu\n")
                     elif patientsEntry == '4':
                         Patient.editPatientInfo()
                         Patient.writeListOfPatientsToFile()
+                        print("\nBack to the previous menu\n")
                     elif patientsEntry == '5':
                         print("\nBack to the previous menu\n")
                         break
