@@ -289,7 +289,6 @@ class Patient(object):
         file = open("files\patients.txt", "r")
         lines = file.readlines()
         for i in lines:
-            print(i)
             data[count] = i.split('_', 5)
             count += 1
         for i in data:
