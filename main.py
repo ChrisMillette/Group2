@@ -23,6 +23,7 @@ class Doctor:
         formatted_data =  str(self.id) + '_' + self.name + '_' + self.speciality + '_' + self.timing + '_' + self.qualification + '_' + str(self.roomNumber)
         return formatted_data
 
+
     # this function takes information abput a doctor and returns its object 
     def enterDrInfo(self):
         id = int(input("Enter the doctor's ID: "))
@@ -94,6 +95,7 @@ class Doctor:
                 f.close()
                 found = True
         
+
         # searching in doctor's list
         for doc in self.doctor_list:
             if doc.name == name:
@@ -103,7 +105,6 @@ class Doctor:
             print("Cant find the doctor with the same ID on the system\n")
         else:
             print("Back to the prevoius menu\n")
-
 
     # display the information of the doctor using its object 
     def displayDoctorInfo(self):
@@ -280,7 +281,7 @@ class Patient(object):
 
     def addPatientToFile():
         data = ''
-        file = open("files\doctors.txt", "a")
+        file = open("files\patients.txt", "a")
         data += '\n' + input("Enter the patient's ID:\n\n") + '_'
         data += input("Enter the patient's Name:\n\n") + '_'
         data += input("Enter the patient's Disease:\n\n") + '_'
