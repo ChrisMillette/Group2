@@ -192,7 +192,32 @@ class Doctor:
                 management.Management.DisplayMenu()
             else:
                 print("Invalid choice")
-    
+                self.doctor_menu()
+                
+class facilities:
+    tfile = open ("files\facilities.txt", "r")
+    global fac
+    fac = tfile.read()
+    tfile.close
+    global facl 
+    facl = fac
+    global facu
+    facu = fac
+
+    def addFacility ():
+        global facu
+        nfac = input ("Add a New Facility:\n")
+        facu = fac+"\n"+nfac
+
+
+    def displayFacilities ():
+        print (facu)
+
+    def writeListOffacilitiestoFile ():
+        wl = open ("files\facilities.txt", "w")
+        wl.write(facu)
+        wl.close
+
 class Patient(object):
 
     global patients
