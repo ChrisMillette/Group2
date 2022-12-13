@@ -287,7 +287,7 @@ class Patient(object):
         file.close()
         print("\nBack to the previous menu\n")
         
-        class Laboratory:
+class Laboratory:
     name = ""
     cost = 0
     # list to maintain all laboratories
